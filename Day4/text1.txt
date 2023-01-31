@@ -1,0 +1,33 @@
+When you want to write in a log file, i.e. appending data to the end of a file, never use appendFile. appendFile opens a file handle for each piece of data you add to your file, after a while you get a beautiful EMFILE error.
+
+I can add that appendFile is not easier to use than a WriteStream.
+
+Example with appendFile:
+
+console.log(new Date().toISOString());
+[...Array(10000)].forEach( function (item,index) {
+    fs.appendFile("append.txt", index+ "\n", function (err) {
+        if (err) console.log(err);
+    });
+});
+console.log(new Date().toISOString());
+Up to 8000 on my computer, you can append data to the file, then you obtain this:
+
+{ Error: EMFILE: too many open files, open 'C:\mypath\append.txt'
+    at Error (native)
+  errno: -4066,
+  code: 'EMFILE',
+  syscall: 'open',
+  path: 'C:\\mypath\\append.txt' }
+Moreover, appendFile will write when it is enabled, so your logs will not be written by timestamp. You can test with example, set 1000 in place of 100000, order will be random, depends on access to file.
+
+If you want to append to a file, you must use a writable stream like this:
+
+var stream = fs.createWriteStream("append.txt", {flags:'a'});
+console.log(new Date().toISOString());
+[...Array(10000)].forEach( function (item,index) {
+    stream.write(index + "\n");
+});
+console.log(new Date().toISOString());
+stream.end();
+You end it when you want. You are not even required to use stream.end(), default option is AutoClose:true, so your file will end when your process ends and you avoid opening too many files.

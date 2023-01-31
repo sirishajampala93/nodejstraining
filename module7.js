@@ -1,25 +1,33 @@
 console.log ("Module 7 starts......");
-function getHighestSalaryEmp(empArray , key)
+function getHighestSalaryEmp(empArray)
 {
-
-    var maxSalary;
-    for(i=0,j=empArray.length ; i<= empArray.length ;i++ , j--)
+   //console.log(empArray); 
+    var maxSalary=[];
+    var max =0;
+    for(var i=0 ; i< empArray.length ;i++)
     {
-        if(empArr[i].salary > empArr[j].salary)
+        if(empArray[i].salary > max)
         {
-        maxSalary=empArr[i].salary;
+            maxSalary=[];
+            max=empArray[i].salary;
+            maxSalary.push(empArr[i]);
         }
+        else if(empArray[i].salary == max)
+        {
+            maxSalary.push(empArr[i]);
+        }
+        
     }
 return maxSalary;
 }
 
 var empArr=[{empId:101,empName:"Asha",salary:1001,deptId:"D1"},
             {empId:102,empName:"Gaurav",salary:2000,deptId:"D1"},
-            {empId:103,empName:"Karan",salary:2000,deptId:"D2"},
+            {empId:103,empName:"Karan",salary:4000,deptId:"D2"},
             {empId:104,empName:"Kishan",salary:3000,deptId:"D1"},
             {empId:105,empName:"Keshav",salary:3500,deptId:"D2"},
             {empId:106,empName:"Pran",salary:4000,deptId:"D3"},
-            {empId:107,empName:"Saurav",salary:3800,deptId:"D3"}]
+            {empId:107,empName:"Saurav",salary:5000,deptId:"D3"}]
 
 var highSalary = getHighestSalaryEmp(empArr);
-console.log("The highest salary" + highSalary);
+console.log(highSalary);
