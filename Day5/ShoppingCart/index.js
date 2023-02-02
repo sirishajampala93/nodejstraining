@@ -1,5 +1,8 @@
-const express=require("express");
+const express=require("express");//module to be installed
 const path=require("path");
+const bodyParser=require("body-parser");//module to be installed
+
+const fs=require("fs");
 
 const port=3000;
 var empArr = [{ empId: 101, empName: "Asha", salary: 1001, deptId: "D1" },
@@ -9,8 +12,38 @@ var empArr = [{ empId: 101, empName: "Asha", salary: 1001, deptId: "D1" },
 { empId: 105, empName: "Keshav", salary: 3500, deptId: "D2" },
 { empId: 106, empName: "Pran", salary: 4000, deptId: "D3" },
 { empId: 107, empName: "Saurav", salary: 3800, deptId: "D3" }]
+var wStream=fs.createWriteStream(path.join(__dirname,"log","serverLog.txt"),);
+
 
 var app=express();
+
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
+
+app.use((request,response,next)=>{
+    console.log("Inside the first custom middleware");
+    var now=new Date().toString();
+    wStream.write(`Request Method : ${request.method}; Request url:${request.url}; Date: ${now}`);
+    next();
+})
+
+app.use((request,response,next)=>{
+    console.log("Inside the first custom middleware");
+    if(request.method == "PUT")
+    {
+        response.send("PUT request received");
+
+    }
+    else
+    {
+        next();
+    }
+})
+
+app.post("/employees",(request,response)=>{
+  console.log(request);
+  response.end("Post request received")
+})
 
 app.get("/employees",(request,response)=>{
     // return an empArr
