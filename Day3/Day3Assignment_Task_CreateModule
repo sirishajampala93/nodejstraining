@@ -1,0 +1,128 @@
+console.log("Start of the Day3 Assignment Task - Create Module with some functions");
+
+console.log("Search Salary Function starts");
+
+function searchSalaryofEmployee(arrOfObj, searchSalary)
+{
+if (arrOfObj !=null)
+{
+var pos = arrOfObj.findIndex(item =>item.salary == searchSalary);
+if(pos >= 0)
+{
+    var empArrObj = [];
+    empArrObj.push(arrOfObj[pos]);
+    return empArrObj;
+}
+}
+else 
+{
+    console.log(" Error :Employee array object is null");
+}
+
+}
+
+var empArr=[{empId:101,empName:"Asha",salary:1001,deptId:"D1"},
+            {empId:102,empName:"Gaurav",salary:2000,deptId:"D1"},
+            {empId:103,empName:"Karan",salary:4000,deptId:"D2"},
+            {empId:104,empName:"Kishan",salary:3000,deptId:"D1"},
+            {empId:105,empName:"Keshav",salary:3500,deptId:"D2"},
+            {empId:106,empName:"Pran",salary:4000,deptId:"D3"},
+            {empId:107,empName:"Saurav",salary:5000,deptId:"D3"}]
+
+var empArrFoundSalary = searchSalaryofEmployee(empArr,4000);
+if(empArrFoundSalary != null || empArrFoundSalary != undefined)
+{
+console.log(empArrFoundSalary);   
+}
+else
+{
+    console.log(" Error :There is a problem with the function searchSalary or the paramameter passed to it");
+} 
+console.log("End of the Search Salary Function ");
+console.log("--------------------------------------------");
+
+console.log("The task :Add an obj at a particular index position: starts");
+
+function addEmp(arrObj,emp,position)
+{ 
+    var isEmpAdded = false;
+    arrObj.splice(position,0,emp); 
+    if(arrObj[position] == emp)
+    {
+        isEmpAdded = true;
+        console.log ("New employee added at the position :" + position);
+    }
+    else 
+    {
+        isEmpAdded= false;
+         console.log ("New employee not added");
+    }
+    return isEmpAdded;
+}
+
+var emp = [{empId:108,empName:"sirisha",salary:5000,deptId:"D3"}]
+
+var isEmployeeAdded = addEmp(empArr, emp,6);
+console.log(isEmployeeAdded);
+console.log("-------------------------------------------------");
+
+console.log("The task : Remove an obj from the arrOfObj");
+
+function removeEmp(arrObj,emp)
+{
+ var isEmpRemoved = false;
+ function indexOf(arrObj1, emp1) {
+     var position = 0;
+    for (var i = 0; i < arrObj1.length; i++) {
+       
+        if (arrObj1[i].toString() == emp1) 
+        {   
+            position =i;
+            console.log(arrObj1.length);
+        }
+        else 
+        {
+         position=-1;
+        }   
+        return position; 
+    }
+   
+ }
+    var pos = indexOf(arrObj,emp);
+    console.log(pos);
+    if(pos >=0)
+    {
+        arrObj.splice(emp,pos);
+        isEmpRemoved=true;
+        console.log("Pos is :" + pos + "and isEmpRemoved is: "+isEmpRemoved);
+    }
+    else
+    {
+        isEmpRemoved = false;
+    }
+
+return isEmpRemoved;
+}
+
+var isEmployeeRemoved = removeEmp(empArr,{empId:107,empName:"Saurav",salary:5000,deptId:"D3"});
+console.log(isEmployeeRemoved);
+
+console.log("---------------------------------------------");
+
+console.log("Start of the task Get a particule emp details from arrObj")
+function getEmpDetails(arrObj,empId)
+{
+    var posEmpId = arrObj.findIndex(item => item.empId == empId);
+    if(posEmpId >=0)
+    {
+        return arrObj[posEmpId];
+    }
+    else{
+        console.log("Error : Requested employee id : "+empId+" is not available")
+    }
+}
+
+var particularEmpDetails =getEmpDetails (empArr , 107);
+console.log(particularEmpDetails);
+
+
