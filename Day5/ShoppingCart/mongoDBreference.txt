@@ -1,0 +1,66 @@
+No sql database
+1. document based
+2. column based
+3. graph based
+4. key value pairs
+
+
+Mongodb
+ -- no sql database
+ -- no schema 
+ -- document based
+ -- bson format( binary json -- json + additional features)
+
+RDBMS --- Mongodb
+database    database
+table       collection
+record      document
+
+Create a database and switch over to database
+
+use databasename;
+
+Create a table/collection
+
+//RDBMS
+create table employee(
+    empId varchar2(20) primary key,
+    empName varchar(20) not null,
+    salary decimal
+)// create the schema
+
+Mongodb -- no schema -- no need to create the collection explicitly
+
+Insert a doc and the collection gets created implicitly
+
+db.collectionName.insertOne(bson obj/document to be inserted)
+
+db.employees.insertOne({empId:101,empName:"sara",salary:8890});
+// Check for a collection named employees. If found, do a simple insertion. If not found, create a collection called as employees and insert the doc
+
+db.emplyoees.insertOne({empId:101,empName:"sara",salary:8890});
+// Create a new collection with the name : emplyoees
+
+
+db.employees.insertOne({empId:101,empName:"sara",salary:8890});// Successful; Create the collection and insert one doc 
+db.employees.insertOne({empId:101,empName:"sara",salary:8890});// Successful; Insert one more doc in the same collection employees but this is a different record
+
+Differentiate the records:
+
+Field : _id:
+    -- Present in all the docs
+    -- If not present in the insert DOc, will be auto generated
+    -- Is working like the Primary key
+    -- Data type ObjectId  (bson data type)
+    --12 byte hexadecimal -- made up of process id, machine id, timestamp, counter
+    -- Can be provided as part of insert
+    -- Has to be unique
+    -- Can have one null value
+    -- Uniqueness ; By default when the collection is created, an unique index on _id is created. This maintains the uniqueness
+
+    db.employees.insertOne({empId:101,empName:"sara",salary:8890,_id:345});
+
+show dbs
+
+// Insert many docs at a
+
